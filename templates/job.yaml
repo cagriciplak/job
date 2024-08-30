@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.job.name | default (include "examplechart.fullname" .) }}
+spec:
+  ttlSecondsAfterFinished: {{ .Values.job.ttlSecondsAfterFinished }}
+  template:
+    spec:
+      containers:
+      - name: {{ .Values.job.containerName }}
+        image: {{ .Values.job.image }}
+        command: ["sh", "-c", "{{ .Values.job.command }}"]
+      restartPolicy: {{ .Values.job.restartPolicy }}
